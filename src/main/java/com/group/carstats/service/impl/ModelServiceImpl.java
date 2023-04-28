@@ -1,9 +1,11 @@
 package com.group.carstats.service.impl;
 
+import com.group.carstats.exception.DuplicateEntryException;
 import com.group.carstats.exception.ResourceNotFoundException;
 import com.group.carstats.model.Model;
 import com.group.carstats.repository.ModelRepository;
 import com.group.carstats.service.ModelService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,12 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public Model save(Model model) {
-        return modelRepository.save(model);
+        try {
+            return modelRepository.save(model);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DuplicateEntryException("Model already exists.");
+        }
     }
 
     @Override

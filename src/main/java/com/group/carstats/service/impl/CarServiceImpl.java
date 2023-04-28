@@ -37,7 +37,7 @@ public class CarServiceImpl implements CarService {
                 .id(foundCar.getId())
                 .build();
 
-        return carRepository.save(updatedCar);
+        return save(updatedCar);
     }
 
     @Override

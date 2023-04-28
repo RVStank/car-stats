@@ -1,10 +1,12 @@
 package com.group.carstats.service.impl;
 
+import com.group.carstats.exception.DuplicateEntryException;
 import com.group.carstats.exception.ResourceNotFoundException;
 import com.group.carstats.model.Brand;
 import com.group.carstats.repository.BrandRepository;
 import com.group.carstats.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,12 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand save(Brand brand) {
-        return brandRepository.save(brand);
+        try {
+            return brandRepository.save(brand);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DuplicateEntryException("Brand already exists.");
+        }
     }
 
     @Override
@@ -43,7 +50,7 @@ public class BrandServiceImpl implements BrandService {
                 .id(foundBrand.getId())
                 .name(brand.getName())
                 .build();
-        return brandRepository.save(updatedBrand);
+        return save(updatedBrand);
     }
 
     @Override
