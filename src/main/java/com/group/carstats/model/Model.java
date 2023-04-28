@@ -19,7 +19,7 @@ public class Model {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String modelName;
+    private String name;
 
     @Column(nullable = false)
     private Integer yearMade;

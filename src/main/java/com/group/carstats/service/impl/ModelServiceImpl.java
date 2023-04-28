@@ -36,11 +36,23 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public Model findByName(String name) {
+        return modelRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Model with name %s does not exist", name)));
+    }
+
+    @Override
+    public Model findByYear(Integer year) {
+        return modelRepository.findByYear(year)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Model with year %d does not exist", year)));
+    }
+
+    @Override
     public Model update(Model model, Long id) {
         Model foundModel = findById(id);
         Model updatedModel = Model.builder()
                 .id(foundModel.getId())
-                .modelName(model.getModelName())
+                .name(model.getName())
                 .yearMade(model.getYearMade())
                 .build();
 

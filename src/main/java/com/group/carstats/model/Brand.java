@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,5 +25,6 @@ public class Brand {
     @Column(unique = true, nullable = false)
     private String name;
 
-
+    @OneToMany(mappedBy = "brand")
+    private List<Model> models;
 }

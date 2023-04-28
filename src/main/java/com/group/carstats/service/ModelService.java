@@ -10,6 +10,10 @@ public interface ModelService {
 
     Model findById(Long id);
 
+    Model findByName(String name);
+
+    Model findByYear(Integer year);
+
     Model update(Model model, Long id);
 
     void deleteById(Long id);
